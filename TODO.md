@@ -6,7 +6,13 @@
 [] Test on FF
 [] Test on Chrome
 [] Test on Windows
+[] Test on light theme
 
+[] fix on url change on back/forward
+[] find different shortcut or make it work on https://monitor.firefox.com/
+[] Add icons
+[] Add alias support
+[] fuzzy search
 [] Add input search and results
 [] Define structure for results (name, description)
 [] Define module structure
@@ -15,6 +21,9 @@
 [] Allow importing dynamically 
 [] Allow custom injections
 [] space input on google.com
+[] make it work on homepage
+
+[] Add themes
 
 [] Add reddit support
 [] Add LC support

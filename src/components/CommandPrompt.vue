@@ -1,21 +1,32 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+import actions from '../actions';
 
 const displayCommandPrompt = ref(false)
 const input = ref(null);
 const searchValue = ref("");
+const selectedIndex = ref(0);
+
+let allPossibleResults = [];
+
+const results = computed(() => {
+	if (searchValue.value.length === 0) {
+		return [];
+	}
+	return allPossibleResults.filter((result) => result.name.toLowerCase().includes(searchValue.value.toLowerCase()));
+});
 
 function show() {
 	displayCommandPrompt.value = true;
 
 	setTimeout(() => {
 		input.value.focus();
+		input.value.select();
 	}, 0);
 }
 
 function hide() {
 	displayCommandPrompt.value = false;
-	searchValue.value = '';
 }
 
 function onKeyboardShortcut(e) {
@@ -24,8 +35,28 @@ function onKeyboardShortcut(e) {
 	}
 }
 
+function submit() {
+	results.value[selectedIndex.value].action();
+}
+
+function setMatches() {
+	const url = window.location.href;
+	const matchingActions = actions.filter((action) => new RegExp(action.urlMatch).test(url));
+	allPossibleResults = [];
+	matchingActions.forEach((action) => {
+		allPossibleResults = [...allPossibleResults, ...action.results];
+	});
+}
+
+function resetState() {
+	searchValue.value = "";
+	displayCommandPrompt.value = false;
+	setMatches();
+}
+
 onMounted(() => {
 	window.addEventListener('keydown', onKeyboardShortcut);
+	resetState();
 });
 
 onUnmounted(() => {
@@ -37,7 +68,14 @@ onUnmounted(() => {
 	<div class="overlay" v-if="displayCommandPrompt" @click="hide">
 		<div class="command-prompt-root">
 			<div class="command-prompt" @click.stop>
-				<input type="text" ref="input" v-model="searchValue" @keydown.esc="hide" />
+				<div class="prompt">
+					<input type="text" ref="input" v-model="searchValue" @keydown.esc="hide" @keydown.enter="submit" />
+				</div>
+				<div v-for="(result, i) in results" :class="{'result': true, 'selected': selectedIndex === i}">
+					<div>
+						{{ result.name }}
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -69,15 +107,20 @@ onUnmounted(() => {
 }
 
 .command-prompt {
-	background-color: var(--ae-color-background);
-	border-radius: 8px;
 	width: 500px;
-	height: 100px;
 	color: var(--ae-white);
-	padding: 0 8px;
 
 	position: absolute;
-	top: 25%;
+	top: 20%;
+}
+
+.prompt {
+	height: 100px;
+	padding: 0 8px;
+	height: 100%;
+	background-color: var(--ae-color-background);
+	opacity: 0.95;
+	border-radius: 8px;
 }
 
 .command-prompt input {
@@ -88,6 +131,23 @@ onUnmounted(() => {
 	font-size: 45px;
 	color: var(--ae-white);
 }
+
+.result {
+	background-color: var(--ae-color-background);
+	opacity: 0.95;
+	height: 50px;
+}
+
+.result:last-child {
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
+}
+
+.result.selected {
+	background-color: var(--ae-highlight);
+	opacity: 0.95;
+}
+
 </style>
 
 <style>
@@ -104,6 +164,8 @@ onUnmounted(() => {
   --ae-text-light-2: rgba(60, 60, 60, 0.66);
   --ae-text-dark-1: var(--ae-white);
   --ae-text-dark-2: rgba(235, 235, 235, 0.64);
+
+	--ae-highlight: rgb(65, 65, 208);
 }
 
 /* semantic color variables for this project */
