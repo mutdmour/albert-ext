@@ -2,15 +2,26 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 
 const displayCommandPrompt = ref(false)
+const input = ref(null);
+const searchValue = ref("");
 
-function onKeyboardShortcut(e) {
-	if (e.metaKey && e.shiftKey && e.key === 'k') {
-		displayCommandPrompt.value = true;
-	}
+function show() {
+	displayCommandPrompt.value = true;
+
+	setTimeout(() => {
+		input.value.focus();
+	}, 0);
 }
 
 function hide() {
 	displayCommandPrompt.value = false;
+	searchValue.value = '';
+}
+
+function onKeyboardShortcut(e) {
+	if (e.metaKey && e.shiftKey && e.key === 'k') {
+		show();
+	}
 }
 
 onMounted(() => {
@@ -25,7 +36,7 @@ onUnmounted(() => {
 <template>
 	<div class="overlay" v-if="displayCommandPrompt" @click="hide">
 		<div class="command-prompt" @click.stop>
-			YO
+			<input type="text" ref="input" v-model="searchValue" @keydown.esc="hide" />
 		</div>
 	</div>
 </template>
@@ -56,7 +67,17 @@ onUnmounted(() => {
 	border-radius: 8px;
 	width: 500px;
 	height: 100px;
-	color: var(--ae-color-white);
+	color: var(--ae-white);
+	padding: 0 8px;
+}
+
+.command-prompt input {
+	background: transparent;
+	border: none;
+	height: 100%;
+	width: 100%;
+	font-size: 45px;
+	color: var(--ae-white);
 }
 </style>
 
