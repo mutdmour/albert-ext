@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import Example from '@/components/Example'
+import CommandPrompt from '@/components/CommandPrompt'
 
 const rootClassName = 'albert-ext-root';
 
@@ -9,7 +9,7 @@ function init() {
 	document.body.appendChild(root);
 
 	setTimeout(() => {
-		const app = createApp(Example)
+		const app = createApp(CommandPrompt)
 		app.mount(`.${rootClassName}`)
 	}, 0);
 }
