@@ -1,3 +1,4 @@
+[] Add TS
 [] Export command prompt as seperate step
 [] Add web extension file support
 [] Add scss support
@@ -13,6 +14,7 @@
 [] Create seperate project for modules
 [] Allow importing dynamically 
 [] Allow custom injections
+[] space input on google.com
 
 [] Add reddit support
 [] Add LC support

@@ -35,8 +35,10 @@ onUnmounted(() => {
 
 <template>
 	<div class="overlay" v-if="displayCommandPrompt" @click="hide">
-		<div class="command-prompt" @click.stop>
-			<input type="text" ref="input" v-model="searchValue" @keydown.esc="hide" />
+		<div class="command-prompt-root">
+			<div class="command-prompt" @click.stop>
+				<input type="text" ref="input" v-model="searchValue" @keydown.esc="hide" />
+			</div>
 		</div>
 	</div>
 </template>
@@ -56,9 +58,13 @@ onUnmounted(() => {
 	left: 0;
 	height: 100vh;
 	min-width: 100%;
+}
 
+.command-prompt-root {
 	display: flex;
-	align-items: center;
+	width: 100%;
+	height: 100%;
+	position: relative;
 	justify-content: center;
 }
 
@@ -69,6 +75,9 @@ onUnmounted(() => {
 	height: 100px;
 	color: var(--ae-white);
 	padding: 0 8px;
+
+	position: absolute;
+	top: 25%;
 }
 
 .command-prompt input {

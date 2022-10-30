@@ -14,10 +14,8 @@ function init() {
 	}, 0);
 }
 
-window.onload = function() {
-		try {
-			init();
-		} catch (e) {
-			console.log(e);
-		}
+try {
+	init();
+} catch (e) {
+	console.error(`albert-ext`, e);
 }
