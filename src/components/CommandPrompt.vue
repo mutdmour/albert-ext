@@ -54,6 +54,28 @@ function resetState() {
 	setMatches();
 }
 
+function moveDown() {
+	if (selectedIndex.value < results.value.length - 1) {
+		selectedIndex.value++;
+	}
+}
+
+function moveUp() {
+	if (selectedIndex.value > 0) {
+		selectedIndex.value--;
+	}
+}
+
+function onKeydown(e) {
+	if (e.key === 'ArrowDown') {
+		e.preventDefault();
+		moveDown();
+	} else if (e.key === 'ArrowUp') {
+		e.preventDefault();
+		moveUp();
+	}
+}
+
 onMounted(() => {
 	window.addEventListener('keydown', onKeyboardShortcut);
 	resetState();
@@ -68,8 +90,8 @@ onUnmounted(() => {
 	<div class="overlay" v-if="displayCommandPrompt" @click="hide">
 		<div class="command-prompt-root">
 			<div class="command-prompt" @click.stop>
-				<div class="prompt">
-					<input type="text" ref="input" v-model="searchValue" @keydown.esc="hide" @keydown.enter="submit" />
+				<div :class="{'prompt': true, 'has-results': !!results.length}">
+					<input type="text" ref="input" v-model="searchValue" @keydown="onKeydown" @keydown.esc="hide" @keydown.enter="submit" />
 				</div>
 				<div v-for="(result, i) in results" :class="{'result': true, 'selected': selectedIndex === i}">
 					<div>
@@ -96,6 +118,7 @@ onUnmounted(() => {
 	left: 0;
 	height: 100vh;
 	min-width: 100%;
+	z-index: 9999999;
 }
 
 .command-prompt-root {
@@ -115,12 +138,16 @@ onUnmounted(() => {
 }
 
 .prompt {
-	height: 100px;
-	padding: 0 8px;
 	height: 100%;
+	padding: 8px;
 	background-color: var(--ae-color-background);
 	opacity: 0.95;
 	border-radius: 8px;
+}
+
+.has-results {
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
 }
 
 .command-prompt input {
@@ -136,6 +163,9 @@ onUnmounted(() => {
 	background-color: var(--ae-color-background);
 	opacity: 0.95;
 	height: 50px;
+	padding-left: 8px;	
+	display: flex;
+	align-items: center;
 }
 
 .result:last-child {
