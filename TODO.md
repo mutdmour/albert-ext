@@ -7,7 +7,10 @@
 [] Test on Chrome
 [] Test on Windows
 [] Test on light theme
+[] put into iframe or webcomponent
 
+[] hide back/forward if no history to move to
+[] add bookmarks support
 [] fix on url change on back/forward
 [] find different shortcut or make it work on https://monitor.firefox.com/
 [] Add icons
