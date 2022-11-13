@@ -1,4 +1,6 @@
-export default {
+import defineActionModule from "../typeGuards";
+
+export default defineActionModule({
 	urlMatch: '.*',
 	results: [
 		{
@@ -29,4 +31,4 @@ export default {
 			],
 		},
 	],
-};
+});

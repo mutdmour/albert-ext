@@ -1,5 +1,5 @@
-import { createApp } from 'vue'
-import CommandPrompt from '@/components/CommandPrompt'
+import { createApp } from 'vue';
+import CommandPrompt from './components/CommandPrompt.vue';
 
 const rootClassName = 'albert-ext-root';
 

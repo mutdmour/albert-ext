@@ -31,7 +31,9 @@
     "@vue/compiler-sfc": "^3.2.32",
     "cross-env": "^7.0.3",
     "laravel-mix": "^6.0.43",
+    "ts-loader": "^9.4.1",
     "types": "^0.1.1",
+    "typescript": "^4.8.4",
     "vue": "^3.2.32",
     "vue-loader": "^17.0.0",
     "vue-template-compiler": "^2.6.14"

@@ -1,5 +1,5 @@
-let mix = require('laravel-mix')
-let path = require('path')
+const mix = require('laravel-mix')
+const path = require('path')
 
 mix.setPublicPath('./')
 mix.alias({
@@ -10,10 +10,10 @@ mix.css('src/assets/css/style.css', 'dist/assets/css')
     .css('src/assets/css/popup.css', 'dist/assets/css')
 
 // compile javascript files
-mix.js('src/app.js', 'dist')
-		.js('src/background.js', 'dist')
-		.js('src/content.js', 'dist')
-    .js('src/popup.js', 'dist')
+mix.ts('src/app.ts', 'dist')
+		.ts('src/background.ts', 'dist')
+		.ts('src/content.ts', 'dist')
+    .ts('src/popup.ts', 'dist')
     .vue()
 
 // copy static files,. views and  

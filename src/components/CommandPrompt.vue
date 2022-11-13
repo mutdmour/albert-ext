@@ -1,13 +1,14 @@
-<script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+<script lang="ts" setup>
+import { ref, computed, onMounted, onUnmounted, Ref } from 'vue'
 import actions from '../actions';
+import type { Result } from '../../Interface';
 
 const displayCommandPrompt = ref(false)
-const input = ref(null);
+const input: Ref<HTMLInputElement | null> = ref(null);
 const searchValue = ref("");
 const selectedIndex = ref(0);
 
-let allPossibleResults = [];
+let allPossibleResults: Result[] = [];
 
 const results = computed(() => {
 	if (searchValue.value.length === 0) {
@@ -20,8 +21,10 @@ function show() {
 	displayCommandPrompt.value = true;
 
 	setTimeout(() => {
-		input.value.focus();
-		input.value.select();
+		if (input.value) {
+			input.value.focus();
+			input.value.select();
+		}
 	}, 0);
 }
 
@@ -29,7 +32,7 @@ function hide() {
 	displayCommandPrompt.value = false;
 }
 
-function onKeyboardShortcut(e) {
+function onKeyboardShortcut(e: KeyboardEvent) {
 	if (e.metaKey && e.shiftKey && e.key === 'k') {
 		show();
 	}
@@ -66,7 +69,7 @@ function moveUp() {
 	}
 }
 
-function onKeydown(e) {
+function onKeydown(e: KeyboardEvent) {
 	if (e.key === 'ArrowDown') {
 		e.preventDefault();
 		moveDown();
