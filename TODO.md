@@ -1,4 +1,5 @@
 [] Add TS
+[] Add husky + conventional commits
 [] Export command prompt as seperate step
 [] Add web extension file support
 [] Add scss support
@@ -9,6 +10,7 @@
 [] Test on light theme
 [] put into iframe or webcomponent
 
+[] Add linear functionalities
 [] hide back/forward if no history to move to
 [] add bookmarks support
 [] fix on url change on back/forward
