@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, computed, onMounted, onUnmounted, Ref } from 'vue'
 import actions from '../actions';
-import type { Result } from '../../Interface';
+import type { Result } from '../Interface';
 
 const displayCommandPrompt = ref(false)
 const input: Ref<HTMLInputElement | null> = ref(null);
@@ -90,20 +90,30 @@ onUnmounted(() => {
 </script>
 
 <template>
-	<div class="overlay" v-if="displayCommandPrompt" @click="hide">
-		<div class="command-prompt-root">
-			<div class="command-prompt" @click.stop>
-				<div :class="{'prompt': true, 'has-results': !!results.length}">
-					<input type="text" ref="input" v-model="searchValue" @keydown="onKeydown" @keydown.esc="hide" @keydown.enter="submit" />
-				</div>
-				<div v-for="(result, i) in results" :class="{'result': true, 'selected': selectedIndex === i}">
-					<div>
-						{{ result.name }}
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+  <div class="overlay" v-if="displayCommandPrompt" @click="hide">
+    <div class="command-prompt-root">
+      <div class="command-prompt" @click.stop>
+        <div :class="{ prompt: true, 'has-results': !!results.length }">
+          <input
+            type="text"
+            ref="input"
+            v-model="searchValue"
+            @keydown="onKeydown"
+            @keydown.esc="hide"
+            @keydown.enter="submit"
+          />
+        </div>
+        <div
+          v-for="(result, i) in results"
+          :class="{ result: true, selected: selectedIndex === i }"
+        >
+          <div>
+            {{ result.name }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped>
@@ -116,71 +126,70 @@ onUnmounted(() => {
 }
 
 .overlay {
-	position: fixed;
-	top: 0;
-	left: 0;
-	height: 100vh;
-	min-width: 100%;
-	z-index: 9999999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  min-width: 100%;
+  z-index: 9999999;
 }
 
 .command-prompt-root {
-	display: flex;
-	width: 100%;
-	height: 100%;
-	position: relative;
-	justify-content: center;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  justify-content: center;
 }
 
 .command-prompt {
-	width: 500px;
-	color: var(--ae-white);
+  width: 500px;
+  color: var(--ae-white);
 
-	position: absolute;
-	top: 20%;
+  position: absolute;
+  top: 20%;
 }
 
 .prompt {
-	height: 100%;
-	padding: 8px;
-	background-color: var(--ae-color-background);
-	opacity: 0.95;
-	border-radius: 8px;
+  height: 100%;
+  padding: 8px;
+  background-color: var(--ae-color-background);
+  opacity: 0.95;
+  border-radius: 8px;
 }
 
 .has-results {
-	border-bottom-left-radius: 0;
-	border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .command-prompt input {
-	background: transparent;
-	border: none;
-	height: 100%;
-	width: 100%;
-	font-size: 45px;
-	color: var(--ae-white);
+  background: transparent;
+  border: none;
+  height: 100%;
+  width: 100%;
+  font-size: 45px;
+  color: var(--ae-white);
 }
 
 .result {
-	background-color: var(--ae-color-background);
-	opacity: 0.95;
-	height: 50px;
-	padding-left: 8px;	
-	display: flex;
-	align-items: center;
+  background-color: var(--ae-color-background);
+  opacity: 0.95;
+  height: 50px;
+  padding-left: 8px;
+  display: flex;
+  align-items: center;
 }
 
 .result:last-child {
-	border-bottom-left-radius: 8px;
-	border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 
 .result.selected {
-	background-color: var(--ae-highlight);
-	opacity: 0.95;
+  background-color: var(--ae-highlight);
+  opacity: 0.95;
 }
-
 </style>
 
 <style>
@@ -198,7 +207,7 @@ onUnmounted(() => {
   --ae-text-dark-1: var(--ae-white);
   --ae-text-dark-2: rgba(235, 235, 235, 0.64);
 
-	--ae-highlight: rgb(65, 65, 208);
+  --ae-highlight: rgb(65, 65, 208);
 }
 
 /* semantic color variables for this project */
